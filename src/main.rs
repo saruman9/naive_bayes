@@ -8,79 +8,80 @@ mod gaussian;
 use rulinalg::matrix::{Matrix, BaseMatrix};
 use rulinalg::utils;
 
+use std::io;
+
 fn main() {
     env_logger::init().unwrap();
 
-    let train = Matrix::new(20,
-                            2,
-                            vec![8.692, 11.023,
-                                 8.349, 4.634,
-                                 10.644, 5.380,
-                                 9.680, 7.341,
-                                 8.203, 5.507,
-                                 7.681, 5.459,
-                                 6.453, 5.671,
-                                 7.039, 5.663,
-                                 8.568, 9.348,
-                                 9.551, 7.882,
-                                 6.845, 5.609,
-                                 6.564, 7.641,
-                                 7.459, 6.360,
-                                 4.832, 8.555,
-                                 5.148, 6.509,
-                                 7.292, 5.393,
-                                 8.928, 8.124,
-                                 7.738, 9.005,
-                                 5.434, 8.383,
-                                 8.559, 6.835]);
-    debug!("train data:\n{}", train);
-    let class = Matrix::new(20,
-                            2,
-                            vec![1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 1.0, 0.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0,
-                                 0.0, 1.0]);
-    debug!("class data:\n{}", class);
-    let targets = Matrix::new(21,
-                              2,
-                              vec![8.0, 8.0,
-                                   8.692, 11.023,
-                                   8.349, 4.634,
-                                   10.644, 5.380,
-                                   9.680, 7.341,
-                                   8.203, 5.507,
-                                   7.681, 5.459,
-                                   6.453, 5.671,
-                                   7.039, 5.663,
-                                   8.568, 9.348,
-                                   9.551, 7.882,
-                                   6.845, 5.609,
-                                   6.564, 7.641,
-                                   7.459, 6.360,
-                                   4.832, 8.555,
-                                   5.148, 6.509,
-                                   7.292, 5.393,
-                                   8.928, 8.124,
-                                   7.738, 9.005,
-                                   5.434, 8.383,
-                                   8.559, 6.835]);
-    debug!("targets data:\n{}", targets);
+    // Read count of train elements and count of features.
+    println!("Input count of train elements and count of features (e.g. 20 2):");
+    let mut properties = String::new();
+    io::stdin().read_line(&mut properties).expect("Error of reading properties of train data.");
+    let mut properties = properties.split_whitespace();
+    let count_elements: usize = properties.next()
+        .and_then(|x| x.parse().ok())
+        .expect("Error of read count of elements of train data.");
+    let count_features: usize = properties.next()
+        .and_then(|x| x.parse().ok())
+        .expect("Error of read count of features of train data.");
+    println!("Count of elements: {}; count of features: {}.", count_elements, count_features);
+    // Read train data.
+    println!("Input train data (e.g.\n1.332 234.2\n2.34 3\n4 5):");
+    let mut train_data: Vec<f64> = Vec::new();
+    for _ in 0..count_elements {
+        let mut buf = String::new();
+        io::stdin().read_line(&mut buf).expect("Error of reading train data.");
+        let mut buf = buf.split_whitespace();
+        while let Some(buf) = buf.next() {
+            train_data.push(buf.parse().expect("Error of parsing train data."));
+        }
+    }
+
+    let train = Matrix::new(count_elements, count_features, train_data);
+    println!("Train data:\n{}", train);
+
+    // Read count of classes.
+    println!("Input count of classes:");
+    let mut count_classes = String::new();
+    io::stdin().read_line(&mut count_classes).expect("Error of reading count of classes.");
+    let count_classes: usize = count_classes.trim().parse()
+        .expect("Error of parsing count of classes.");
+    // Read data of class.
+    let mut class_data: Vec<f64> = Vec::new();
+    println!("Input classes data (e.g.\n1 0 0\n0 0 1\n0 1 0):");
+    for _ in 0..count_elements {
+        let mut buf = String::new();
+        io::stdin().read_line(&mut buf).expect("Error of reading class data.");
+        let mut buf = buf.split_whitespace();
+        while let Some(buf) = buf.next() {
+            class_data.push(buf.parse().expect("Error of parsing class data."));
+        }
+    }
+
+    let class = Matrix::new(count_elements, count_classes, class_data);
+    println!("Class data:\n{}", class);
+
+    // Read count of targets.
+    println!("Input count of targets for predict:");
+    let mut count_targets = String::new();
+    io::stdin().read_line(&mut count_targets).expect("Error of reading count of target data.");
+    let count_elements_target: usize = count_targets.trim().parse()
+        .expect("Error of parsing count of elements of target data.");
+    // Read data of targets.
+    println!("Count of elements: {}; count of features: {}", count_elements_target, count_features);
+    println!("Input target data (e.g.\n1.332 234.2 3.4\n2.34 3 5.6\n4 5 0.0):");
+    let mut target_data: Vec<f64> = Vec::new();
+    for _ in 0..count_elements_target {
+        let mut buf = String::new();
+        io::stdin().read_line(&mut buf).expect("Error of reading target data.");
+        let mut buf = buf.split_whitespace();
+        while let Some(buf) = buf.next() {
+            target_data.push(buf.parse().expect("Error of parsing target data."));
+        }
+    }
+
+    let targets = Matrix::new(count_elements_target, count_features, target_data);
+    println!("Targets data:\n{}", targets);
 
     let class_count = class.cols();
     let feature_count = train.cols();
