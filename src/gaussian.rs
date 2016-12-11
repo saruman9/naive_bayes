@@ -98,7 +98,6 @@ impl Gaussian {
         }
 
         Matrix::new(class_count, targets.rows(), post_prob).transpose()
-        // Matrix::zeros(targets.rows(), class_count)
     }
 }
 

@@ -19,12 +19,14 @@ fn main() {
     io::stdin().read_line(&mut properties).expect("Error of reading properties of train data.");
     let mut properties = properties.split_whitespace();
     let count_elements: usize = properties.next()
-        .and_then(|x| x.parse().ok())
+        .and_then(|x| x.trim().parse().ok())
         .expect("Error of read count of elements of train data.");
     let count_features: usize = properties.next()
-        .and_then(|x| x.parse().ok())
+        .and_then(|x| x.trim().parse().ok())
         .expect("Error of read count of features of train data.");
-    println!("Count of elements: {}; count of features: {}.", count_elements, count_features);
+    println!("Count of elements: {}; count of features: {}.",
+             count_elements,
+             count_features);
     // Read train data.
     println!("Input train data (e.g.\n1.332 234.2\n2.34 3\n4 5):");
     let mut train_data: Vec<f64> = Vec::new();
@@ -33,7 +35,7 @@ fn main() {
         io::stdin().read_line(&mut buf).expect("Error of reading train data.");
         let mut buf = buf.split_whitespace();
         while let Some(buf) = buf.next() {
-            train_data.push(buf.parse().expect("Error of parsing train data."));
+            train_data.push(buf.trim().parse().expect("Error of parsing train data."));
         }
     }
 
@@ -44,7 +46,8 @@ fn main() {
     println!("Input count of classes:");
     let mut count_classes = String::new();
     io::stdin().read_line(&mut count_classes).expect("Error of reading count of classes.");
-    let count_classes: usize = count_classes.trim().parse()
+    let count_classes: usize = count_classes.trim()
+        .parse()
         .expect("Error of parsing count of classes.");
     // Read data of class.
     let mut class_data: Vec<f64> = Vec::new();
@@ -54,7 +57,7 @@ fn main() {
         io::stdin().read_line(&mut buf).expect("Error of reading class data.");
         let mut buf = buf.split_whitespace();
         while let Some(buf) = buf.next() {
-            class_data.push(buf.parse().expect("Error of parsing class data."));
+            class_data.push(buf.trim().parse().expect("Error of parsing class data."));
         }
     }
 
@@ -65,10 +68,13 @@ fn main() {
     println!("Input count of targets for predict:");
     let mut count_targets = String::new();
     io::stdin().read_line(&mut count_targets).expect("Error of reading count of target data.");
-    let count_elements_target: usize = count_targets.trim().parse()
+    let count_elements_target: usize = count_targets.trim()
+        .parse()
         .expect("Error of parsing count of elements of target data.");
     // Read data of targets.
-    println!("Count of elements: {}; count of features: {}", count_elements_target, count_features);
+    println!("Count of elements: {}; count of features: {}",
+             count_elements_target,
+             count_features);
     println!("Input target data (e.g.\n1.332 234.2 3.4\n2.34 3 5.6\n4 5 0.0):");
     let mut target_data: Vec<f64> = Vec::new();
     for _ in 0..count_elements_target {
@@ -76,7 +82,7 @@ fn main() {
         io::stdin().read_line(&mut buf).expect("Error of reading target data.");
         let mut buf = buf.split_whitespace();
         while let Some(buf) = buf.next() {
-            target_data.push(buf.parse().expect("Error of parsing target data."));
+            target_data.push(buf.trim().parse().expect("Error of parsing target data."));
         }
     }
 
