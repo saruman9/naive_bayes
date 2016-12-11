@@ -1,0 +1,9 @@
+[package]
+name = "naive_bayes"
+version = "0.1.0"
+authors = ["saruman9 <rum.274.4@gmail.com>"]
+
+[dependencies]
+rulinalg = "0.3"
+log = "0.3"
+env_logger = "0.3"
