@@ -1,0 +1,61 @@
+#+TITLE: Наивный байесовский классификатор
+#+AUTHOR: Alex Sarum
+#+LANGUAGE: ru
+
+#+LATEX_CMD: xelatex
+# Set geometry of page
+#+LATEX_CLASS: gost
+# Set cyrillic fonts
+#+LATEX_HEADER_EXTRA: \setmainlanguage[babelshorthands=true]{russian}
+#+LATEX_HEADER_EXTRA: \setotherlanguage{english}
+#+LATEX_HEADER_EXTRA: \defaultfontfeatures{Ligatures=TeX,Mapping=tex-text}
+#+LATEX_HEADER_EXTRA: \setmainfont{Times New Roman}
+#+LATEX_HEADER_EXTRA: \newfontfamily\cyrillicfont{Times New Roman}
+#+LATEX_HEADER_EXTRA: \setsansfont{Arial}
+#+LATEX_HEADER_EXTRA: \newfontfamily\cyrillicfontsf{Arial}
+#+LATEX_HEADER_EXTRA: \setmonofont{DejaVu Sans Mono}
+#+LATEX_HEADER_EXTRA: \newfontfamily\cyrillicfonttt[Scale=0.8]{DejaVu Sans Mono}
+
+#+BEGIN_QUOTE
+Наивный байесовский классификатор — простой вероятностный классификатор,
+основанный на применении Теоремы Байеса со строгими (наивными) предположениями о
+независимости. -- [[https://ru.wikipedia.org/wiki/%25D0%259D%25D0%25B0%25D0%25B8%25D0%25B2%25D0%25BD%25D1%258B%25D0%25B9_%25D0%25B1%25D0%25B0%25D0%25B9%25D0%25B5%25D1%2581%25D0%25BE%25D0%25B2%25D1%2581%25D0%25BA%25D0%25B8%25D0%25B9_%25D0%25BA%25D0%25BB%25D0%25B0%25D1%2581%25D1%2581%25D0%25B8%25D1%2584%25D0%25B8%25D0%25BA%25D0%25B0%25D1%2582%25D0%25BE%25D1%2580][Wikipedia]]
+#+END_QUOTE
+
+В данной работе реализован наивный байесовский классификатор на базе Гауссовой
+функции для данных с нормальным распределением. Модель данного типа используется
+в случае непрерывных признаков и предполагает, что значения признаков имеют
+нормальное распределение.
+
+* Описание функционала
+
+\begin{equation}
+p(C_k|x) = p(C_k) \frac{p(x|C_k)}{p_x}
+\end{equation}
+
+Программа состоит из двух модулей: главного ([[file:./src/main.rs][~main.rs~]]) и модуля для расчёта
+Гауссовой функции и Posterior Probability --- $P(C_{k} | x)$ ([[file:./src/gaussian.rs][~gaussian.rs~]]).
+
+** Модуль ~gaussian.rs~
+
+Представляет из себя структуру данных ~Gaussian~, которая содержит в себе
+информацию о математическом ожидании (~expected~) и дисперсии (~variance~),
+характерных для определённого класса данных с заданной характеристикой. Каждая
+из полей структуры представляет из себя матрицу (подробнее смотри
+[[file:./src/gaussian.rs][~gaussian.rs~]]).
+
+Статический метод ~from_model~ на вход принимает количество анализируемых
+классов и количество характеристик, возвращает новый объект структуры
+~Gaussian~.
+
+Метод ~compute_gaussian~ на вход принимает матрицу данных для обучения и
+идентификационный номер класса, для которого требуется вычислить математическое
+ожидание и дисперсию всех характеристик. Как уже было сказано, данный метод
+вычисляет необходимые параметры Гауссовой функции для каждой из характеристик
+класса и записывает в поля ассоциированной структуры (матрицы ~expected~ и
+~variance~).
+
+Метод ~compute_likehood_and_predict~ на вход принимает матрицу объектов (матрица
+характеристик), которые необходимо классифицировать, а также массив Class Prior
+Probability --- $P(C_{k})$. Возвращает матрицу, которая содержит вероятности
+соотнесения объектов к тому или иному классу.
