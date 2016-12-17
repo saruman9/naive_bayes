@@ -54,7 +54,8 @@ impl Gaussian {
     /// Compute parameters (expected value, variance) for the Class of data.
     pub fn compute_gaussian(&mut self, data: &Matrix<f64>, class_num: usize) {
         let expected = data.mean(Axes::Row).into_vec();
-        let variance = data.variance(Axes::Row).unwrap().into_vec();
+        // Count of rows must be greater than 1.
+        let variance = data.variance(Axes::Row).map(|x| x.into_vec()).unwrap_or(vec![0f64]);
 
         let features: usize = data.cols();
 
