@@ -53,6 +53,8 @@ Probability, $p(x | C_k)$ --- Likehood, $p(x)$ --- Predictor Prior Probability.
 Задача: построить классификатор и отнести распознаваемый объект к определённому
 классу.
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Входные данные
 #+BEGIN_SRC text
 X_1 = [8.692, 8.349, 10.644, 9.680, 8.203, 7.681, 6.453, 7.039, 8.568, 9.551]
@@ -60,12 +62,16 @@ Y_1 = [11.023, 4.634, 5.380, 7.341, 5.507, 5.459, 5.671, 5.663, 9.348, 7.882]
 X_2 = [6.845, 6.564, 7.459, 4.832, 5.148, 7.292, 8.928, 7.738, 5.434, 8.559]
 Y_2 = [5.609, 7.641, 6.360, 8.555, 6.509, 5.393, 8.124, 9.005, 8.383, 6.835]
 #+END_SRC
+#+LATEX: \end{listing}
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Распознаваемый объект
 #+BEGIN_SRC text
 X = 8
 Y = 8
 #+END_SRC
+#+LATEX: \end{listing}
 
 
 * Описание функционала
@@ -87,16 +93,21 @@ x)$ ([[file:./src/gaussian.rs][=gaussian.rs=]]).
 [[lst:input_count_train_data]]). Производится ввод двух целых чисел через
 пробел, по окончанию ввод следует нажать ~<Enter>~.
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Ввод информации о данных для обучения
 #+NAME: lst:input_count_train_data
 #+BEGIN_SRC text
 Input count of train elements and count of features (e.g. 20 2):
 $ 5 2
 #+END_SRC
+#+LATEX: \end{listing}
 
 Затем требуется ввести данные для обучения в количестве указанном раннее
 (листинг [[lst:input_train_data]]).
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Ввод данных для обучения
 #+NAME: lst:input_train_data
 #+BEGIN_SRC text
@@ -117,6 +128,7 @@ Train data:
 ⎢  9.68  7.341⎥
 ⎣ 6.845  5.609⎦
 #+END_SRC
+#+LATEX: \end{listing}
 
 Также требуется ввести информацию о принадлежности данных к тому или иному
 классу (листинги [[lst:input_count_class]], [[lst:input_class]]). Нежелательно,
@@ -124,13 +136,18 @@ Train data:
 чтобы один объект соответствовал нескольким классам. Ввод классов происходит в
 том же порядке, в каком были введены данные об объектах для обучения.
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Ввод информации о количестве классов
 #+NAME: lst:input_count_class
 #+BEGIN_SRC text
 Input count of classes:
 $ 2
 #+END_SRC
+#+LATEX: \end{listing}
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Ввод информации о распределении данных для обучения по классам
 #+NAME: lst:input_class
 #+BEGIN_SRC text
@@ -150,17 +167,23 @@ Class data:
 ⎢0 1⎥
 ⎣0 1⎦
 #+END_SRC
+#+LATEX: \end{listing}
 
 В конце вводится информация для объектов, которые необходимо классифицировать
 (листинги [[lst:input_count_targets]], [[lst:input_target_data]]).
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Ввод информации о количестве объектов для классификации
 #+NAME: lst:input_count_targets
 #+BEGIN_SRC text
 Input count of targets for predict:
 $ 3
 #+END_SRC
+#+LATEX: \end{listing}
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Ввод информации об объектах для классификации
 #+NAME: lst:input_target_data
 #+BEGIN_SRC text
@@ -177,10 +200,13 @@ Targets data:
 ⎢   12    32⎥
 ⎣    1     1⎦
 #+END_SRC
+#+LATEX: \end{listing}
 
 В конечном итоге мы получаем информацию о классификации целевых объектов
 (листинг [[lst:output_summary]]).
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Информация о классах для целевых объектов
 #+NAME: lst:output_summary
 #+BEGIN_SRC text
@@ -188,6 +214,7 @@ Class of target #0 is 1
 Class of target #1 is 1
 Class of target #2 is 2
 #+END_SRC
+#+LATEX: \end{listing}
 
 
 *** Тесты
@@ -195,8 +222,10 @@ Class of target #2 is 2
 Данный модуль также включает в себя функции самотестирования для выявления
 ошибок при изменении функционала. Данные тесты запускаются каждый раз, когда
 происходит слияние рабочих копий в общую основную ветвь разработки при
-непрерывной интеграции (Continuous Integration).
+непрерывной интеграции (Continuous Integration) (листинг [[lst:testing]]).
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Процесс самотестирования успешно пройден
 #+NAME: lst:testing
 #+BEGIN_SRC text
@@ -210,6 +239,7 @@ test tests::test_gaussian ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
 #+END_SRC
+#+LATEX: \end{listing}
 
 
 ** Модуль =gaussian.rs=
@@ -220,10 +250,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
 [[lst:struct_gaussian]]). Каждая из полей структуры представляет из себя матрицу
 (таблица [[tbl:struct_gaussian]]).
 
-#+ATTR_LATEX: :float nil
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Структура =Gaussian=
 #+NAME: lst:struct_gaussian
 #+INCLUDE: "./src/gaussian.rs" :lines "28-34" src rust
+#+LATEX: \end{listing}
 
 #+CAPTION: Внутреннее представление структуры =Gaussian=
 #+NAME: tbl:struct_gaussian
@@ -239,9 +271,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
 количество анализируемых классов и количество атрибутов, возвращает новый объект
 структуры =Gaussian=.
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Статический метод =from_model=
 #+NAME: lst:fn_from_model
 #+INCLUDE: "./src/gaussian.rs" :lines "46-48" src rust
+#+LATEX: \end{listing}
 
 Метод =compute_gaussian= (листинг [[lst:fn_compute_gaussian]]) на вход принимает
 матрицу данных для обучения и идентификационный номер класса, для которого
@@ -250,9 +285,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
 для каждого из атрибутов класса и записывает в поля ассоциированной структуры
 (матрицы =expected= и =variance=).
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Метод =compute_gaussian=
 #+NAME: lst:fn_compute_gaussian
 #+INCLUDE: "./src/gaussian.rs" :lines "54-56" src rust
+#+LATEX: \end{listing}
 
 Метод =compute_likehood_and_predict= (листинг
 [[lst:fn_compute_likehood_and_predict]]) на вход принимает матрицу объектов
@@ -260,9 +298,12 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
 Prior Probability --- $P(C_{k})$. Возвращает матрицу, которая содержит
 вероятности соотнесения объектов к тому или иному классу.
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Метод =compute_likehood_and_predict=
 #+NAME: lst:fn_compute_likehood_and_predict
-#+INCLUDE: "./src/gaussian.rs" :lines "71-76" src rust
+#+INCLUDE: "./src/gaussian.rs" :lines "71-77" src rust
+#+LATEX: \end{listing}
 
 Нормальное распределение, также называемое распределением Гаусса или
 Гаусса--Лапласа —-- распределение вероятностей, которое в одномерном случае
@@ -284,82 +325,46 @@ p(x = \upsilon|c) = \frac{1}{\sqrt{2 \pi \sigma_{c}^{2}}} e^{-\frac{(\upsilon - 
 Для классифицирования заданного объекта приведём данные к требуемому виду
 (листинг [[lst:format_input_data]]) и запишем в файл (~variant.inp~).
 
-#+NAME: lst:format_input_data
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+CAPTION: Форматированные данные
-#+INCLUDE: "./variant.inp" src text
+#+NAME: lst:format_input_data
+#+BEGIN_SRC text
+20 2
+8.692 11.023
+8.349 4.634
+...
+7.738 9.005
+5.434 8.383
+8.559 6.835
+2
+1 0
+1 0
+...
+0 1
+0 1
+1
+8 8
+#+END_SRC
+#+LATEX: \end{listing}
 
 Для классификации передадим содержимое файла с данными программе через пайп
 (листинг [[lst:result]]).
 
+#+LATEX: \begin{listing}[H]
+#+ATTR_LATEX: :float t
 #+NAME: lst:result
 #+CAPTION: Вывод программы и классификация
 #+BEGIN_SRC text
 $ cat variant.inp | cargo run --release
     Finished release [optimized] target(s) in 0.0 secs
      Running `target/release/naive_bayes`
-Input count of train elements and count of features (e.g. 20 2):
-Count of elements: 20; count of features: 2.
-Input train data (e.g.
-1.332 234.2
-2.34 3
-4 5):
-Train data:
-⎡ 8.692 11.023⎤
-⎢ 8.349  4.634⎥
-⎢10.644   5.38⎥
-⎢  9.68  7.341⎥
-⎢ 8.203  5.507⎥
-⎢ 7.681  5.459⎥
-⎢ 6.453  5.671⎥
-⎢ 7.039  5.663⎥
-⎢ 8.568  9.348⎥
-⎢ 9.551  7.882⎥
-⎢ 6.845  5.609⎥
-⎢ 6.564  7.641⎥
-⎢ 7.459   6.36⎥
-⎢ 4.832  8.555⎥
-⎢ 5.148  6.509⎥
-⎢ 7.292  5.393⎥
-⎢ 8.928  8.124⎥
-⎢ 7.738  9.005⎥
-⎢ 5.434  8.383⎥
-⎣ 8.559  6.835⎦
-Input count of classes:
-Input classes data (e.g.
-1 0 0
-0 0 1
-0 1 0):
-Class data:
-⎡1 0⎤
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢1 0⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎢0 1⎥
-⎣0 1⎦
-Input count of targets for predict:
-Count of elements: 1; count of features: 2
-Input target data (e.g.
-1.332 234.2 3.4
-2.34 3 5.6
-4 5 0.0):
+...
 Targets data:
 [8 8]
 Class of target #0 is 2
 #+END_SRC
+#+LATEX: \end{listing}
 
 
 * Результаты
