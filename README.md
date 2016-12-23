@@ -1,11 +1,11 @@
 <div class="abstract">
 Наивный байесовский классификатор — простой вероятностный классификатор, основанный на применении Теоремы Байеса со строгими (наивными) предположениями о независимости (формула [1](#orglatexenvironment1)). &#x2014; [Wikipedia](https://ru.wikipedia.org/wiki/Наивный_байесовский_классификатор)
 
-\begin{equation}
+```math
 p(C_k | x) = \frac{p(C_k) p(x | C_k)}{p(x)},
-\end{equation}
+```
 
-где \(p(C_k | x)\) &#x2014; Posterior Probability, \(p(C_k)\) &#x2014; Class Prior Probability, \(p(x | C_k)\) &#x2014; Likehood, \(p(x)\) &#x2014; Predictor Prior Probability.
+где $`p(C_k | x)`$ &#x2014; Posterior Probability, $`p(C_k)`$ &#x2014; Class Prior Probability, $`p(x | C_k)`$ &#x2014; Likehood, $`p(x)`$ &#x2014; Predictor Prior Probability.
 
 В данной работе реализован наивный байесовский классификатор на базе Гауссовой функции для данных с нормальным распределением. Модель данного типа используется в случае непрерывных признаков и предполагает, что значения признаков имеют нормальное распределение.
 
@@ -31,7 +31,7 @@ Y = 8
 
 # Описание функционала
 
-Программа состоит из двух модулей: главного ([`main.rs`](./src/main.rs)) и модуля для расчёта Гауссовой функции и Posterior Probability &#x2014; \(P(C_{k} | x)\) ([`gaussian.rs`](./src/gaussian.rs)).
+Программа состоит из двух модулей: главного ([`main.rs`](./src/main.rs)) и модуля для расчёта Гауссовой функции и Posterior Probability &#x2014; $`P(C_{k} | x)`$ ([`gaussian.rs`](./src/gaussian.rs)).
 
 ## Модуль `main.rs`
 
@@ -151,12 +151,12 @@ pub struct Gaussian {
 }
 ```
 
-|               | \(feature_{1}\) | \(feature_{2}\) | \(feature_{3}\) | &#x2026; | \(feature_{n}\) |
+|               | $`feature_{1}`$ | $`feature_{2}`$ | $`feature_{3}`$ | &#x2026; | $`feature_{n}`$ |
 |-------------- |---------------- |---------------- |---------------- |--------- |---------------- |
-| \(Class_{1}\) | exp, var        | exp, var        | exp, var        | &#x2026; | exp, var        |
-| \(Class_{2}\) | exp, var        | exp, var        | exp, var        | &#x2026; | exp, var        |
+| $`Class_{1}`$ | exp, var        | exp, var        | exp, var        | &#x2026; | exp, var        |
+| $`Class_{2}`$ | exp, var        | exp, var        | exp, var        | &#x2026; | exp, var        |
 | &#x2026;      | &#x2026;        | &#x2026;        | &#x2026;        | &#x2026; | &#x2026;        |
-| \(Class_{k}\) | exp, var        | exp, var        | exp, var        | &#x2026; | exp, var        |
+| $`Class_{k}`$ | exp, var        | exp, var        | exp, var        | &#x2026; | exp, var        |
 
 Статический метод `from_model` (листинг [12](#orgsrcblock10)) на вход принимает количество анализируемых классов и количество атрибутов, возвращает новый объект структуры `Gaussian`.
 
@@ -172,7 +172,7 @@ pub fn from_model(class_count: usize, features_count: usize) -> Self {
 pub fn compute_gaussian(&mut self, data: &Matrix<f64>, class_num: usize) {
 ```
 
-Метод `compute_likehood_and_predict` (листинг [14](#orgsrcblock12)) на вход принимает матрицу объектов (матрица атрибутов), которые необходимо классифицировать, а также массив Class Prior Probability &#x2014; \(P(C_{k})\). Возвращает матрицу, которая содержит вероятности соотнесения объектов к тому или иному классу.
+Метод `compute_likehood_and_predict` (листинг [14](#orgsrcblock12)) на вход принимает матрицу объектов (матрица атрибутов), которые необходимо классифицировать, а также массив Class Prior Probability &#x2014; $`P(C_{k})`$. Возвращает матрицу, которая содержит вероятности соотнесения объектов к тому или иному классу.
 
 ```rust
 /// Compute likehood and Posterior Probability for each class of data.
@@ -184,11 +184,11 @@ pub fn compute_likehood_and_predict(&self,
 
 Нормальное распределение, также называемое распределением Гаусса или Гаусса&#x2013;Лапласа —&#x2013; распределение вероятностей, которое в одномерном случае задаётся функцией плотности вероятности, совпадающей с функцией Гаусса (формула [2](#orglatexenvironment2)).
 
-\begin{equation}
+```math
 p(x = \upsilon|c) = \frac{1}{\sqrt{2 \pi \sigma_{c}^{2}}} e^{-\frac{(\upsilon - \mu_{c})^{2}}{2 \sigma_{c}^{2}}},
-\end{equation}
+```
 
-где параметр \(\upsilon\) &#x2013;— математическое ожидание (среднее значение), медиана и мода распределения, а параметр \(\sigma\) &#x2013;— среднеквадратическое отклонение (\(\sigma^2\) — дисперсия) распределения.
+где параметр $`\upsilon`$ &#x2013;— математическое ожидание (среднее значение), медиана и мода распределения, а параметр $`\sigma`$ &#x2013;— среднеквадратическое отклонение ($`\sigma^2`$ — дисперсия) распределения.
 
 # Классификация объекта
 
